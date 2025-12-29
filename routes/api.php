@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\MidtransWebhookController;
 use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\Admin\ReportController;
+use App\Http\Controllers\Api\Admin\DashboardController;
 
 
 Route::prefix('auth')->group(function () {
@@ -90,4 +91,10 @@ Route::middleware(['auth:sanctum','role:admin'])
     ->prefix('admin/reports')
     ->group(function () {
         Route::get('/transactions', [ReportController::class, 'transactions']);
+    });
+
+Route::middleware(['auth:sanctum','role:admin'])
+    ->prefix('admin')
+    ->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index']);
     });
