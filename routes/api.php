@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\Admin\BookingController as AdminBookingController;
+use Illuminate\Support\Facades\Broadcast;
 
 Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
@@ -47,3 +48,21 @@ Route::middleware(['auth:sanctum','role:admin'])->prefix('admin')->group(functio
     Route::patch('/bookings/{booking}/status', [AdminBookingController::class, 'updateStatus']);
     Route::patch('/bookings/{booking}/price', [AdminBookingController::class, 'setPrice']);
 });
+
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
+
+Route::middleware(['auth:sanctum','role:admin,customer'])->prefix('chat')->group(function () {
+    Route::get('/conversations', [ChatController::class, 'conversations']);
+    Route::post('/conversations', [ChatController::class, 'createOrGet']);
+    Route::get('/conversations/{conversation}/messages', [ChatController::class, 'messages']);
+    Route::post('/conversations/{conversation}/messages', [ChatController::class, 'send']);
+});
+
+// CUSTOMER payment
+Route::middleware(['auth:sanctum','role:customer'])->group(function () {
+    Route::post('/payments/{booking}/create', [PaymentController::class, 'create']);
+    Route::get('/payments/{booking}', [PaymentController::class, 'show']);
+});
+
+// WEBHOOK (tanpa auth)
+Route::post('/payments/webhook/midtrans', [MidtransWebhookController::class, 'handle']);
