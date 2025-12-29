@@ -7,6 +7,10 @@ use App\Http\Controllers\Api\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\Admin\BookingController as AdminBookingController;
 use Illuminate\Support\Facades\Broadcast;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\MidtransWebhookController;
+use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
+
 
 Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
@@ -66,3 +70,9 @@ Route::middleware(['auth:sanctum','role:customer'])->group(function () {
 
 // WEBHOOK (tanpa auth)
 Route::post('/payments/webhook/midtrans', [MidtransWebhookController::class, 'handle']);
+
+Route::middleware(['auth:sanctum','role:admin'])
+    ->prefix('admin')
+    ->group(function () {
+        Route::apiResource('users', AdminUserController::class);
+    });
