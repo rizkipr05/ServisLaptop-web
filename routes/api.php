@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\MidtransWebhookController;
 use App\Http\Controllers\Api\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Api\TransactionController;
+use App\Http\Controllers\Api\Admin\ReportController;
 
 
 Route::prefix('auth')->group(function () {
@@ -75,4 +77,17 @@ Route::middleware(['auth:sanctum','role:admin'])
     ->prefix('admin')
     ->group(function () {
         Route::apiResource('users', AdminUserController::class);
+    });
+
+// CUSTOMER
+Route::middleware(['auth:sanctum','role:customer'])->group(function () {
+    Route::get('/transactions', [TransactionController::class, 'index']);
+    Route::get('/transactions/{booking}', [TransactionController::class, 'show']);
+});
+
+// ADMIN REPORT
+Route::middleware(['auth:sanctum','role:admin'])
+    ->prefix('admin/reports')
+    ->group(function () {
+        Route::get('/transactions', [ReportController::class, 'transactions']);
     });
