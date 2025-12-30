@@ -7,12 +7,12 @@ Aplikasi web modern untuk manajemen booking servis laptop yang memudahkan pelang
 ## 🚀 Tech Stack
 
 <p align="center">
-  <img src=".github/assets/tech_stack_laravel.png" alt="Laravel" height="60"/>
-  <img src=".github/assets/tech_stack_vue.png" alt="Vue.js" height="60"/>
-  <img src=".github/assets/tech_stack_inertia.png" alt="Inertia.js" height="60"/>
-  <img src=".github/assets/tech_stack_tailwind.png" alt="TailwindCSS" height="60"/>
-  <img src=".github/assets/tech_stack_typescript.png" alt="TypeScript" height="60"/>
-  <img src=".github/assets/tech_stack_midtrans.png" alt="Midtrans" height="60"/>
+  <img alt="Laravel" src="https://img.shields.io/badge/Laravel-12-red?logo=laravel&logoColor=white" />
+  <img alt="Vue.js" src="https://img.shields.io/badge/Vue.js-3-42b883?logo=vue.js&logoColor=white" />
+  <img alt="Inertia.js" src="https://img.shields.io/badge/Inertia.js-Modern-9553E9?logo=inertia&logoColor=white" />
+  <img alt="TailwindCSS" src="https://img.shields.io/badge/TailwindCSS-4-38bdf8?logo=tailwindcss&logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-Strict-3178C6?logo=typescript&logoColor=white" />
+  <img alt="Midtrans" src="https://img.shields.io/badge/Midtrans-Payment-1C7ED6?logo=moneygram&logoColor=white" />
 </p>
 
 ### Backend
