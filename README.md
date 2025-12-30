@@ -683,44 +683,11 @@ GET    /api/admin/reports/transactions  - Transaction reports
 
 ---
 
-## 🤝 Contributing
-
-Jika Anda ingin berkontribusi pada proyek ini:
-
-1. Fork repository
-2. Buat branch baru (`git checkout -b feature/AmazingFeature`)
-3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
----
-
 ## 📝 License
 
 Proyek ini menggunakan [MIT License](LICENSE).
 
 ---
-
-## 📞 Support
-
-Jika ada pertanyaan atau butuh bantuan:
-
-- **Email:** support@servislaptop.com
-- **Issues:** [GitHub Issues](https://github.com/your-repo/issues)
-- **Documentation:** [Wiki](https://github.com/your-repo/wiki)
-
----
-
-## 🙏 Credits
-
-Terima kasih kepada semua kontributor dan pengguna tools open-source berikut:
-
-- [Laravel](https://laravel.com/)
-- [Vue.js](https://vuejs.org/)
-- [Inertia.js](https://inertiajs.com/)
-- [TailwindCSS](https://tailwindcss.com/)
-- [Midtrans](https://midtrans.com/)
-- [Pusher](https://pusher.com/)
 
 ---
 
