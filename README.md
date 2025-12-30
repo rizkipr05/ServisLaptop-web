@@ -689,6 +689,4 @@ Proyek ini menggunakan [MIT License](LICENSE).
 
 ---
 
----
-
 
