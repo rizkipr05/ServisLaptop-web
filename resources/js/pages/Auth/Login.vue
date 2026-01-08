@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, Link } from '@inertiajs/vue3';
 
 const form = useForm({
     email: '',
@@ -52,7 +52,7 @@ const submit = () => {
                         type="password" 
                         id="password"
                         class="w-full px-4 py-3 rounded-lg border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-colors outline-none"
-                        placeholder="••••••••"
+                        placeholder="......."
                         required 
                     />
                 </div>
@@ -69,9 +69,9 @@ const submit = () => {
                 <div class="mt-6 text-center">
                     <p class="text-sm text-slate-600 dark:text-slate-400">
                         Belum punya akun? 
-                        <a href="/register" class="font-bold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+                        <Link href="/register" class="font-bold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
                             Daftar Disini
-                        </a>
+                        </Link>
                     </p>
                 </div>
 
