@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import MainLayout from '@/layouts/MainLayout.vue';
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 
 defineProps<{
     midtrans_client_key?: string; 
@@ -20,16 +20,52 @@ const form = useForm({
 onMounted(() => {
     const script = document.createElement('script');
     script.src = 'https://app.sandbox.midtrans.com/snap/snap.js';
+
     // Client key 
     script.setAttribute('data-client-key', 'SB-Mid-client-4W-WgxZvB15RM-aS'); 
     document.head.appendChild(script);
 });
 
+// Logic untuk tangkep Token Midtrans
+const page = usePage();
+
+watch(() => page.props.flash, (flash: any) => {
+    // Kalau ada 'snap_token' dikirim dari Controller
+    if (flash?.snap_token) {
+        console.log("Token diterima:", flash.snap_token);
+        
+        // Cek apakah Snap.js sudah siap
+        if ((window as any).snap) {
+            (window as any).snap.pay(flash.snap_token, {
+                onSuccess: function(result: any){
+                    alert("Pembayaran Berhasil!");
+                    console.log(result);
+                    form.reset(); // Kosongkan form kalau sukses
+                },
+                onPending: function(result: any){
+                    alert("Menunggu Pembayaran...");
+                    console.log(result);
+                    form.reset();
+                },
+                onError: function(result: any){
+                    alert("Pembayaran Gagal!");
+                    console.log(result);
+                },
+                onClose: function(){
+                    alert('Kamu menutup popup tanpa membayar.');
+                }
+            });
+        } else {
+            console.error("Midtrans Snap belum terload sempurna.");
+        }
+    }
+}, { deep: true });
+
 // Fungsi Submit Form
 const submitBooking = () => {
     form.post('/booking', {
         onSuccess: () => {
-            // Logic frontend
+            // Logic frontend (Token ditangani oleh 'watch')
             console.log("Data terkirim, menunggu token pembayaran...");
             
             // Panggil: window.snap.pay('TOKEN');

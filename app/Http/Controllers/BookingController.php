@@ -84,5 +84,21 @@ class BookingController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['msg' => 'Gagal koneksi Midtrans: ' . $e->getMessage()]);
         }
+
+        try {
+            $snapToken = Snap::getSnapToken($params);
+        
+            // Update token ke database
+            $booking->update(['snap_token' => $snapToken]);
+
+            // [UPDATE] Kirim snap_token ke Frontend via session flash
+            return redirect()->back()->with([
+                'success' => 'Booking berhasil! Silakan selesaikan pembayaran.',
+                'snap_token' => $snapToken 
+            ]);
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['msg' => 'Gagal koneksi Midtrans: ' . $e->getMessage()]);
+        }
     }
 }
