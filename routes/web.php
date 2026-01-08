@@ -1,20 +1,45 @@
 <?php
 
-use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\BookingController;
 
-// Halaman Home
+// Halaman Utama
 Route::get('/', function () {
     return Inertia::render('Welcome');
 })->name('home');
 
-// Halaman Booking
-Route::get('/booking', function () {
-    return Inertia::render('Booking/Create');
-})->name('booking.create');
+// Definisi Route Login & Register Manual 
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login')->middleware('guest');
 
-// Halaman Tracking untuk pantau status perbaikan
+Route::get('/register', function () {
+    return Inertia::render('Auth/Register');
+})->name('register')->middleware('guest');
+
+
+// Group Route Khusus Member (Wajib Login)
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+
+    // Dashboard Standard
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    // Menampilkan Form Booking
+    Route::get('/booking', [BookingController::class, 'create'])->name('booking.create');
+
+    // Memproses Data Booking
+    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+});
+
+
+// Halaman Tracking (Bebas Akses/Public)
 Route::get('/tracking', function () {
     return Inertia::render('Tracking/Index');
 })->name('tracking.index');
