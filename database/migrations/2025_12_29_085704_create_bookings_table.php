@@ -10,26 +10,41 @@ return new class extends Migration {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // customer
-            $table->foreignId('service_id')->nullable()->constrained()->nullOnDelete();
+            // Relasi ke User (Wajib Login)
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            
+            // Kode untuk Tracking 
+            $table->string('booking_code')->unique(); 
 
-            $table->string('booking_code')->unique(); // untuk tracking (mis. SV-2025-0001)
+            // Data Customer
+            $table->string('name');
+            $table->string('phone');
 
-            $table->string('device_brand')->nullable();
-            $table->string('device_type')->nullable(); // laptop/pc/dll
-            $table->string('serial_number')->nullable();
+            // Data Laptop
+            $table->string('device_brand')->nullable(); // Merk
+            $table->string('device_type')->nullable();  // Laptop/PC/dll
+            $table->string('serial_number')->nullable(); // Serial Number opsional
 
-            $table->text('damage_notes'); // detail kerusakan dari customer
-            $table->text('admin_notes')->nullable();
+            // Jenis Layanan (Dari Dropdown Form)
+            $table->string('service_type')->nullable(); 
 
+            // Detail Kerusakan
+            $table->text('damage_notes'); // description dari form masuk kesini
+            $table->text('admin_notes')->nullable(); // Catatan teknisi
+
+            // Status & Jadwal
             $table->string('status')->default('pending');
-            $table->dateTime('scheduled_at')->nullable(); // jadwal datang (opsional)
+            $table->dateTime('scheduled_at')->nullable(); 
 
-            $table->unsignedInteger('estimated_cost')->nullable(); // setelah diagnosa (opsional)
-            $table->unsignedInteger('total_price')->nullable();    // final
+            // Harga & Pembayaran (MIDTRANS)
+            $table->unsignedInteger('estimated_cost')->nullable();
+            $table->unsignedInteger('total_price')->default(0);
+            $table->string('payment_status')->default('unpaid'); // unpaid, paid, failed
+            $table->string('snap_token')->nullable(); // Token buat popup bayar
 
             $table->timestamps();
 
+            // Indexing biar pencarian cepat
             $table->index(['user_id', 'status']);
             $table->index('booking_code');
         });
